@@ -1,5 +1,5 @@
 import React from "react";
-
+import './style.scss'
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -8,7 +8,7 @@ class Home extends React.Component {
   componentWillMount() {}
   componentDidMount() {}
   render() {
-    return <div>132</div>;
+    return <div className="home">132</div>;
   }
 }
 export default Home
