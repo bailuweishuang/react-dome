@@ -24,7 +24,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.js[x]?$/,
         exclude: /node_modules/,
         loader: "babel-loader",
         query: {
@@ -32,7 +32,10 @@ module.exports = {
           presets: ["es2015", "react", "stage-2"]
         }
       },
-      { test: /\.css$/, loader: "style-loader!css-loader" },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader", "sass-loader"]
+      },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: "url-loader",
@@ -62,24 +65,22 @@ module.exports = {
   devServer: {
     // contentBase: path.join(__dirname, ""),
     contentBase: false, //since we use CopyWebpackPlugin.
-    clientLogLevel: 'warning',
-    publicPath: '/',
+    clientLogLevel: "warning",
+    publicPath: "/",
     hot: true,
     progress: true,
     overlay: { warnings: false, errors: true },
     historyApiFallback: {
-        rewrites: [
-            { from: /.*/, to: path.posix.join('/', 'index.html') },
-        ],
+      rewrites: [{ from: /.*/, to: path.posix.join("/", "index.html") }]
     },
     // historyApiFallback: true,
     // quiet: true, // necessary for FriendlyErrorsPlugin
     compress: true,
     inline: true,
     port: 8083,
-    host: '127.0.0.1',
+    host: "127.0.0.1",
     watchOptions: {
-        poll: false,
+      poll: false
     }
-}
+  }
 };

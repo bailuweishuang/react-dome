@@ -1,9 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
+import Home from "./pages/home/index.jsx";
 class App extends React.Component {
   render() {
-    return <div>Hello World</div>;
+    return (
+      <div>
+        <Home />
+      </div>
+    );
   }
 }
 
