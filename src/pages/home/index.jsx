@@ -8,7 +8,9 @@ class Home extends React.Component {
   componentWillMount() {}
   componentDidMount() {}
   render() {
-    return <div className="home">132</div>;
+    return <div className="home">132
+      <p className="home-title">ss为什么会有两个样式</p>
+    </div>;
   }
 }
 export default Home
