@@ -3,7 +3,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-  entry: "./src/app.js",
+  entry: ["react-hot-loader/patch", path.join(__dirname, "./src/app.js")],
   output: {
     path: path.join(__dirname + "/build"),
     publicPath: "/",
@@ -19,7 +19,8 @@ module.exports = {
         removeAttributeQuotes: true
       },
       filename: "index.html"
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     rules: [
@@ -34,7 +35,7 @@ module.exports = {
       },
       {
         test: /\.s[c|a]ss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: ["style-loader", "css-loader", "sass-loader"]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
