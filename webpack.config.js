@@ -1,87 +1,83 @@
-var webpack = require("webpack");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
 const path = require("path");
+var HtmlWebpackPlugin = require("html-webpack-plugin");
+var webpack = require("webpack");
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  entry: ["react-hot-loader/patch", path.join(__dirname, "./src/app.js")],
-  output: {
-    path: path.join(__dirname + "/build"),
-    publicPath: "/",
-    filename: "bundle.js",
-    chunkFilename: "js/[name]-[hash]" + ".js"
+  devtool: "source-map",
+  entry: {
+    app: [path.join(__dirname, "./src/app.js")],
+    vendor: ["react", "react-router-dom", "redux", "react-dom", "react-redux"]
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: "./index.html",
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-      },
-      filename: "index.html"
-    }),
-    new webpack.HotModuleReplacementPlugin()
-  ],
+  output: {
+    path: path.join(__dirname, "./build"),
+    filename: "[name].[chunkhash].js",
+    chunkFilename: "[name].[chunkhash].js",
+    publicPath: "/"
+  },
   module: {
     rules: [
       {
         test: /\.js[x]?$/,
-        exclude: /node_modules/,
-        loader: "babel-loader",
-        query: {
-          plugins: ["transform-runtime"],
-          presets: ["es2015", "react", "stage-2"]
-        }
+        use: ["babel-loader"],
+        include: path.join(__dirname, "src")
       },
       {
         test: /\.s[c|a]ss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: [
+          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader"
+        ]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: "url-loader",
-        options: {
-          limit: 10000,
-          name: "static/img/[name].[hash:7].[ext]"
-        }
-      },
-      {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: "url-loader",
-        options: {
-          limit: 10000,
-          name: "static/media/[name].[hash:7].[ext]"
-        }
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: "url-loader",
-        options: {
-          limit: 10000,
-          name: "static/fonts/[name].[hash:7].[ext]"
-        }
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 8192
+            }
+          }
+        ]
       }
     ]
   },
-  devServer: {
-    // contentBase: path.join(__dirname, ""),
-    contentBase: false, //since we use CopyWebpackPlugin.
-    clientLogLevel: "warning",
-    publicPath: "/",
-    hot: true,
-    progress: true,
-    overlay: { warnings: false, errors: true },
-    historyApiFallback: {
-      rewrites: [{ from: /.*/, to: path.posix.join("/", "index.html") }]
-    },
-    // historyApiFallback: true,
-    // quiet: true, // necessary for FriendlyErrorsPlugin
-    compress: true,
-    inline: true,
-    port: 8083,
-    host: "127.0.0.1",
-    watchOptions: {
-      poll: false
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      template: path.join(__dirname, "./index.html")
+    }),
+    new UglifyJSPlugin(),
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("production")
+      }
+    }),
+    new webpack.HashedModuleIdsPlugin(),
+    new CleanWebpackPlugin(["build"]),
+    new MiniCssExtractPlugin({
+      filename: devMode ? "[name].css" : "[name].[hash].css",
+      chunkFilename: devMode ? "[id].css" : "[id].[hash].css"
+    })
+  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: { name: "vendor", chunks: "initial", minChunks: 2 }
+      }
+    }
+  },
+  resolve: {
+    alias: {
+      pages: path.join(__dirname, "src/pages"),
+      component: path.join(__dirname, "src/component"),
+      router: path.join(__dirname, "src/router"),
+      actions: path.join(__dirname, "src/redux/actions"),
+      reducers: path.join(__dirname, "src/redux/reducers")
     }
   }
 };

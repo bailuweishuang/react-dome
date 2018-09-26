@@ -6,6 +6,7 @@ const getRouters = () => (
             <ul>
                 <li><Link to="/">首页</Link></li>
                 <li><Link to="/mine">Page1</Link></li>
+                <li><Link to="/userinfo">userinfo</Link></li>
             </ul>
         </div>
 );
