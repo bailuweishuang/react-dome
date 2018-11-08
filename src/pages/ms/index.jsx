@@ -87,7 +87,7 @@ cookies、sessionStorage 和localStorage 的区别：
             if(value == "" || value == null) {
                 return false;
             }else {
-                return true;
+                return true; 
             }
         }
     }
@@ -118,6 +118,35 @@ cookies、sessionStorage 和localStorage 的区别：
     没有defer async 属性， 浏览器会立即加载并执行相应的脚本，也就是说在渲染script标签之后的文档之前，不等待后续加载的文档内容，读到就开始加载和执行，此举会阻塞后续文档的加载。
     async 后续文档的加载和渲染与js脚步的加载和执行是并行进行的，即异步执行
     defer 加载后续文档的过程和JS脚步的加载（此时仅加载不执行）是并行进行的（异步），JS脚步的执行需要等到文档所以元素解析完成之后，DOMContentLoaded事件触发执行之前
+
+    请问 “resetting” 和 “normalizing” CSS 之间的区别？你会如何选择，为什么？
+    Normalize.css 是一个可定制的 CSS 文件，使浏览器呈现的所有元素，更一致和符合现代标准；是在现代浏览器环境下对于CSS reset的替代。 它正是针对只需要统一的元素样式。该项目依赖于研究浏览器默认元素风格之间的差异，精确定位需要重置的样式。
+
+    normalizing：
+    保护有用的浏览器默认样式而不是完全去掉它们
+    一般化的样式：为大部分HTML元素提供
+    修复浏览器自身的bug并保证各浏览器的一致性
+    优化CSS可用性：用一些小技巧
+    解释代码：用注释和详细的文档来
+
+    Normalize.css 保护了有价值的默认值：
+    Reset通过为几乎所有的元素施加默认样式，强行使得元素有相同的视觉效果。相比之下，Normalize.css保持了许多默认的浏览器样式。这就意味着你不用再为所有公共的排版元素重新设置样式。当一个元素在不同的浏览器中有不同的默认值时，Normalize.css会力求让这些样式保持一致并尽可能与现代标准相符合
+
+    清楚浮动：
+    一： <div class="clearfloat">    css: .clearfloat:after{display:block;clear: both; content: "";visibility: hidden; height: 0} .clearfloat {zoom: 1}
+          <div></div>
+          <div></div>
+        </div>
+    二：<div>
+          <div></div>
+          <div></div>
+          <div class="clearfloat"></div>    css: .clearfloat {clear: both} 布局会多出多个div
+        </div>
+    三：当高度固定的时候，给父级一个固定的高度
+    四：当定义宽度是的时候，不能定义高度 不能跟position一起用 css: 父级 {width: 98%,overflow:hidden}
+    
+    图片替换文字方案:
+     <div class="content"><sapn>这是一个图片替换文字方案</sapn></div> css: .content{background: url() top left no-repeat; width: 100px; heigh: 100px;} span {display: none}
 
     
 */
