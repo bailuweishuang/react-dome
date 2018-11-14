@@ -7,7 +7,7 @@ class Kuayu extends React.Component {
     原理： 利用<script> 标签没有跨域限制的漏洞 通过<script>标签指向一个需要访问的地址并提供一个回调函数来接受数据当需求通讯
     <script src="http://domani/api?param1=a&callback=jsonp"></script>
     <script>
-     function jsonp (data) {
+     function jsonp (data) { 
          console.log(data)
      }
     </script>

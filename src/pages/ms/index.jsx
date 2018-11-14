@@ -150,3 +150,102 @@ cookies、sessionStorage 和localStorage 的区别：
 
     
 */
+//高阶组件
+import React from "react";
+import Third from './third.jsx';
+class First extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={};
+    };
+    componentWillMount();
+    render() {
+        return <div>{this.props.useName}</div>
+    }
+}
+First = Third(First);
+export default First;
+
+//
+class Second extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={};
+    };
+    componentWillMount();
+    render() {
+        return <div></div>
+    }
+}
+//继承
+
+// 原型继承
+//父类
+function Persion(name, age) {
+    this.name = name;
+    this.age = age;
+};
+//父类的原型对象属性
+Persion.prototype.id = 10;
+//子类
+function Boy(sex) {
+    this.sex = sex;
+};
+Boy.prototype = new Persion("12",123);
+var a = new Boy();
+//缺点：单个修改，原型的属性会被修改，就会导致所有继承该原型的类的属性都会被改变，实例间没有隔离开
+
+//类继承（借用构造函数的方式继承）
+//父类
+function PersionO(name, age) {
+    this.name = name;
+    this.age = age;
+};
+//父类的原型对象属性
+Persion.prototype.id = 10;
+//子类
+function BoyO(name, age, sex) {
+    PersionO.call(this,name,age);
+    this.sex = sex;
+};
+var b = new BoyO();
+//缺点：不能继承父类的原型对象
+
+//原型和类的组合
+function PersionT(name, age){
+    this.name = name; 
+    this.age = age;
+};
+
+function BoyT(name, age, sex){
+    PersionT.call(this, name, age);
+    this.sex = sex;
+};
+
+BoyT.prototype = Object.create(PersionT.prototype);
+BoyT.prototype.constructor = BoyT;
+var c = new BoyT();
+
+
+//模块化开发
+//目前，通行的js规模规范主要有2种： CommonJS（服务器端的规范） 和 AMD（浏览器端模块化开发的规范吧   ），AMD的规范 我们使用define定义模块，使用require调用模块
+/** 
+ * define()函数：define（id?,dependencies?,factory）
+ * id: 定义中模块的名字 
+ * dependencies： 是一个当前模块依赖的，已被模块定义的模块标识的数组字面量。应该默认为["require", "exports", "module"]
+ * **/
+//WebSocket
+function abce(url){
+    let c = new WebSocket(url);
+    //链接成功的回调
+    c.onopen = e =>{
+        console.log(e);
+        c.send("123")
+    };
+    //监听服务端返回的信息
+    c.onmessage = e => {
+        //do something
+    };
+    return c
+};
+let ac = abce('ws://1111')

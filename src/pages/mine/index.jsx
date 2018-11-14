@@ -72,6 +72,20 @@ class Home extends React.Component {
       });
     };
   }
+  welcome = username => {
+    console.log(username)
+  }
+  goodbye = username => {
+    console.log(username)
+  }
+  a = fun => {
+    let fn = () => {
+      let v = window.localStorage.getItem("c");
+      fun(v);
+    };
+    return fn
+  }
+  c = a(welcome);
   render() {
     return (
       <div className="mine">
@@ -79,7 +93,7 @@ class Home extends React.Component {
         <p className="mine-title">想和你哭 想和你笑 想拥你入我怀抱 这是一个传说</p>
         <ul id="ul">
           <li id="one">
-            1<span id="delete">删除</span>
+            1<span id="delete">删除{this.c()}</span>
           </li>
           <li id="two">
             2<span id="delete">删除</span>
