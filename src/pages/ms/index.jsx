@@ -248,4 +248,48 @@ function abce(url){
     };
     return c
 };
-let ac = abce('ws://1111')
+let ac = abce('ws://1111');
+//浅拷贝
+/**
+ * let a = [1,2,3]; b = a;
+ */
+//深拷贝
+/**
+ * 递归的方法
+ * deepClone = obj => {
+ *  let cloneOobj = Array.isArray(obj) ? [] : {};
+ *  if(obj && typeof obj === "object") {
+    *  for(key in obj) {
+    *     if(obj.hasOwnProperty(key)){
+                if(obj[key] && typeof obj[key] == "object") {
+                    cloneOobj[key] = deppClone(obj[key])
+                }else {
+                    cloneOobj[key] = obj[key]
+                }
+            }
+ *  }
+ * return objClone;
+ * }
+ */
+
+clone = obj =>{
+    let objClone = Array.isArray(obj) ? [] : {};
+    if(obj && typeof obj === "object") {
+        for(key in obj) {
+            if(obj.hasOwnProperty(key)) {
+                if(obj[key] && typeof obj[key] === "object") {
+                    objClone[key] = clone(obj[key])
+                }else {
+                    objClone[key] = obj[key]
+                }
+            }
+        }
+    };
+    return objClone;
+}
+cloneTwo = obj =>{
+    let objF = Array.isArray(obj) ? [] : {};
+    let _obj = JSON.stringify(obj);
+    objF = JSON.parse(_obj);
+    return objF 
+}

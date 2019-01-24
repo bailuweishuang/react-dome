@@ -7,10 +7,6 @@ class Bundle extends React.Component {
             mod: null
         }
     }
-    // state = {
-    //     // short for "module" but that's a keyword in js, so "mod"
-    //     mod: null
-    // };
 
     componentWillMount() {
         this.load(this.props)
@@ -34,7 +30,8 @@ class Bundle extends React.Component {
     }
 
     render() {
-        return this.props.children(this.state.mod)
+        //return this.props.children(this.state.mod)
+        return this.state.mod ? <this.state.mod /> : null;
     }
 }
 

@@ -5,7 +5,6 @@ const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== "production";
-
 module.exports = {
   devtool: "source-map",
   entry: {
@@ -72,8 +71,10 @@ module.exports = {
     }
   },
   resolve: {
+    extensions: [".js", ".jsx", ".json"],
     alias: {
       pages: path.join(__dirname, "src/pages"),
+      js: path.join(__dirname, "src/js"),
       component: path.join(__dirname, "src/component"),
       router: path.join(__dirname, "src/router"),
       actions: path.join(__dirname, "src/redux/actions"),

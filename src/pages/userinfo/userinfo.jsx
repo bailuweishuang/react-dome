@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getUserInfo} from "../../redux/actions/userInfo";
 
 class UserInfo extends Component {
 
@@ -26,4 +25,4 @@ class UserInfo extends Component {
     }
 }
 
-export default connect((state) => ({userInfo: state.userInfo}), {getUserInfo})(UserInfo);
+export default UserInfo

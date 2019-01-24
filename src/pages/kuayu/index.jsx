@@ -45,3 +45,15 @@ class Kuayu extends React.Component {
     return "";
   }
 }
+xml = url => {
+    let xmlhttp;
+    if(window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest()
+    }else if(window.ActiveXObject){
+        xmlhttp = new ActiveXObject()
+    };
+    if(xmlhttp != null){
+        xmlhttp.open("GET",url,false)
+        xmlhttp.send(null);
+    }
+}
