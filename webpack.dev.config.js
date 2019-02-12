@@ -23,7 +23,7 @@ module.exports = {
       },
       filename: "index.html"
     }),
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
   optimization: {
     splitChunks: {
@@ -35,7 +35,7 @@ module.exports = {
 
   resolve: {
     alias: {
-        "@": path.resolve(__dirname, "src"),
+      "@": path.resolve(__dirname, "src"),
       pages: path.resolve(__dirname, "src/pages"),
       component: path.resolve(__dirname, "src/component"),
       router: path.resolve(__dirname, "src/router")

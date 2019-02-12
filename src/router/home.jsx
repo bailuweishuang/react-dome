@@ -1,9 +1,16 @@
 import React from "react";
+import Page from "@/components/page/index.jsx";
 import Common from "./common.jsx";
 const ZRoute = Common.ZRoute;
-import Bundle from "./bundle.js"
+const getNavigation = Common.getNavigation;
+const Menus = Common.Menus;
+const onIsSelected = Common.onIsSelected;
+import Bundle from "./bundle.js";
 const Homes = () => (
   <Bundle load={require("bundle-loader?lazy!@/pages/home/index.jsx")} />
+);
+const Mine = () => (
+  <Bundle load={require("bundle-loader?lazy!@/pages/mine/index.jsx")} />
 );
 class Home extends React.Component {
   constructor(props) {
@@ -15,10 +22,22 @@ class Home extends React.Component {
   render() {
     return (
       <ZRoute
-        exact
         path="/home"
         component={({ match, history }) => {
-          return <ZRoute exact path={match.url} component={Homes} />;
+          return (
+            <Page
+              {...this.props}
+              title="测试"
+              navigation={getNavigation(match.path)}
+              horizontalMenus={{
+                onIsSelected: menu => onIsSelected(menu, history),
+                menus: Menus.home
+              }}
+            >
+              <ZRoute exact path={match.url} component={Homes} />
+              <ZRoute path={`${match.url}/mine`} component={Mine} />
+            </Page>
+          );
         }}
       />
     );

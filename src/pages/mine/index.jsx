@@ -1,5 +1,7 @@
 import React from "react";
-import "./style.scss";
+//import "./style.scss";
+import pages from "@/components/preload/index.jsx";
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
